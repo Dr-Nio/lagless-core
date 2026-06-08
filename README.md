@@ -1,2 +1,105 @@
-# lagless-core
-# ⚡ @lagless/core  A framework-agnostic caching and data orchestration engine for modern applications.  `@lagless/core` provides a deterministic system for handling caching, cache invalidation, request deduplication, and data revalidation between your application and external data sources.  ---  ## 🧠 What it is  `@lagless/core` is a low-level engine that sits between your application logic and your data sources.  It standardizes how data is:  - cached - retrieved - invalidated - revalidated  Instead of implementing ad-hoc caching per route or service, Lagless Core centralizes the logic into a single consistent system.  ---  ## ⚙️ Core Responsibilities  The engine is responsible for:  - Cache key generation and resolution - Cache storage abstraction (via adapters) - TTL management - Cache invalidation logic - Request deduplication - Revalidation triggers - Deterministic data retrieval flow  ---  ## 🧱 Architecture (Core Only)  The core is designed as a strict internal engine with pluggable interfaces:  - **Cache Resolver** → determines whether data should be fetched or served from cache - **Key Engine** → generates deterministic cache keys - **Policy Engine** → applies TTL and invalidation rules - **Storage Interface** → abstract layer for persistence (memory, Redis, KV, etc.) - **Execution Pipeline** → controls request flow from input → resolution → output  No framework logic is included in the core.  ---  ## 🔁 Data Flow  Typical execution flow:  1. Request enters core 2. Cache key is generated 3. Cache store is checked 4. If hit → return cached data 5. If miss → fetch from source 6. Store result in cache 7. Apply TTL + policy rules 8. Return response  ---  ## 🧩 Design Principles  - Deterministic behavior (same input → same cache outcome) - No framework coupling - Storage-agnostic design - Predictable invalidation rules - Minimal runtime overhead - Explicit control over caching behavior  ---  ## 🧪 Use Cases  - Server-side caching engines - API response caching layers - Data-fetch orchestration - Backend performance optimization - Unified caching layer across services  ---  ## 🛡 License  This package is released under the **Lagless Source-Available License (LSAL v1.0)**.  - Source is visible for review and integration - Allowed for internal and production use - Commercial redistribution is restricted - Competing implementations are prohibited  See `LICENSE` for full terms.  ---  ## 🏁 Status  `@lagless/core` is in active development and may change as internal architecture stabilizes.  API surface is not yet considered stable.
+# ⚡ @lagless/core
+
+A framework-agnostic caching and data orchestration engine for modern applications.
+
+`@lagless/core` provides a deterministic system for handling caching, cache invalidation, request deduplication, and data revalidation between your application and external data sources.
+
+---
+
+## 🧠 What it is
+
+`@lagless/core` is a low-level engine that sits between your application logic and your data sources.
+
+It standardizes how data is:
+
+- cached
+- retrieved
+- invalidated
+- revalidated
+
+Instead of implementing ad-hoc caching per route or service, Lagless Core centralizes the logic into a single consistent system.
+
+---
+
+## ⚙️ Core Responsibilities
+
+The engine is responsible for:
+
+- Cache key generation and resolution
+- Cache storage abstraction (via adapters)
+- TTL management
+- Cache invalidation logic
+- Request deduplication
+- Revalidation triggers
+- Deterministic data retrieval flow
+
+---
+
+## 🧱 Architecture (Core Only)
+
+The core is designed as a strict internal engine with pluggable interfaces:
+
+- **Cache Resolver** → determines whether data should be fetched or served from cache
+- **Key Engine** → generates deterministic cache keys
+- **Policy Engine** → applies TTL and invalidation rules
+- **Storage Interface** → abstract layer for persistence (memory, Redis, KV, etc.)
+- **Execution Pipeline** → controls request flow from input → resolution → output
+
+No framework logic is included in the core.
+
+---
+
+## 🔁 Data Flow
+
+Typical execution flow:
+
+1. Request enters core
+2. Cache key is generated
+3. Cache store is checked
+4. If hit → return cached data
+5. If miss → fetch from source
+6. Store result in cache
+7. Apply TTL + policy rules
+8. Return response
+
+---
+
+## 🧩 Design Principles
+
+- Deterministic behavior (same input → same cache outcome)
+- No framework coupling
+- Storage-agnostic design
+- Predictable invalidation rules
+- Minimal runtime overhead
+- Explicit control over caching behavior
+
+---
+
+## 🧪 Use Cases
+
+- Server-side caching engines
+- API response caching layers
+- Data-fetch orchestration
+- Backend performance optimization
+- Unified caching layer across services
+
+---
+
+## 🛡 License
+
+This package is released under the **Lagless Source-Available License (LSAL v1.0)**.
+
+- Source is visible for review and integration
+- Allowed for internal and production use
+- Commercial redistribution is restricted
+- Competing implementations are prohibited
+
+See `LICENSE` for full terms.
+
+---
+
+## 🏁 Status
+
+`@lagless/core` is in active development and may change as internal architecture stabilizes.
+
+API surface is not yet considered stable.
