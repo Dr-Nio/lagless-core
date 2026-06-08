@@ -1,6 +1,6 @@
 # 📜 LAGLESS SOURCE-AVAILABLE LICENSE (LSAL) v1.0
 
-**Copyright (c) 2026 Lagless Technologies**
+**Copyright (c) 2026 Lagless Technologies (Dr-Nio Repo)**
 
 All rights reserved.
 
@@ -50,7 +50,7 @@ You may use the Software in production only if:
 
 ## 3. OWNERSHIP
 
-The Software is the exclusive property of Lagless Technologies.
+The Software is the exclusive property of Lagless Technologies (Dr-Nio Repo).
 
 No ownership or intellectual property rights are transferred.
 
@@ -102,13 +102,13 @@ Upon termination, you must cease all use and destroy all copies of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 
-LAGLESS TECHNOLOGIES DISCLAIMS ALL WARRANTIES INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+Lagless Technologies (Dr-Nio Repo) DISCLAIMS ALL WARRANTIES INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
 
 ---
 
 ## 8. LIABILITY
 
-IN NO EVENT SHALL LAGLESS TECHNOLOGIES BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+IN NO EVENT SHALL Lagless Technologies (Dr-Nio Repo) BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
 
 ---
 
@@ -121,4 +121,4 @@ This License shall be governed by applicable international intellectual property
 ## 10. CONTACT
 
 For commercial licensing inquiries, contact:  
-Lagless Technologies Licensing Department
+Lagless Technologies (Dr-Nio Repo) Licensing Department
