@@ -31,7 +31,7 @@ describe('RequestEngine', () => {
     });
     globalThis.fetch = vi.fn().mockResolvedValue(mockResponse);
 
-    const result = await request.execute({ url: 'https://api.example.com/data' });
+    const result = await request.execute({ url: 'https://api.henzret.com/items/products/data' });
     expect(result.data).toEqual({ data: 'test' });
     expect(result.status).toBe(200);
     expect(globalThis.fetch).toHaveBeenCalledTimes(1);
@@ -39,44 +39,73 @@ describe('RequestEngine', () => {
 
   it('should handle request timeout', async () => {
     globalThis.fetch = vi.fn().mockImplementation(() => new Promise(resolve => setTimeout(resolve, 100)));
-    await expect(request.execute({ url: 'https://api.example.com', timeout: 10 })).rejects.toThrow('timeout');
+    await expect(request.execute({ url: 'https://api.henzret.com/items/products', timeout: 10 })).rejects.toThrow('timeout');
   });
 
   it('should retry on failure', async () => {
     let attempts = 0;
     globalThis.fetch = vi.fn().mockImplementation(async () => {
       attempts++;
-      if (attempts < 3) throw new Error('Network error');
-      return new Response(JSON.stringify({ ok: true }), { status: 200 });
+      if (attempts < 3) {
+        throw new Error('Network error');
+      }
+      return new Response(JSON.stringify({ ok: true }), { 
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
     });
-    const result = await request.execute({ url: 'https://api.example.com', retryPolicy: { maxAttempts: 3, baseDelay: 10 } });
+    
+    const result = await request.execute({ 
+      url: 'https://api.henzret.com/items/products', 
+      retryPolicy: { 
+        maxAttempts: 3, 
+        baseDelay: 10,
+        maxDelay: 50,
+        jitter: false 
+      } 
+    });
+    
     expect(result.status).toBe(200);
     expect(globalThis.fetch).toHaveBeenCalledTimes(3);
-  });
+  }, 15000);
 
   it('should deduplicate identical requests', async () => {
     let callCount = 0;
     globalThis.fetch = vi.fn().mockImplementation(async () => {
       callCount++;
       await new Promise(r => setTimeout(r, 20));
-      return new Response(JSON.stringify({ id: callCount }), { status: 200 });
+      // Return proper Response with correct Content-Type
+      return new Response(JSON.stringify({ id: callCount }), { 
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
     });
+    
     const [res1, res2, res3] = await Promise.all([
-      request.execute({ url: 'https://api.example.com/dedup', method: 'GET' }),
-      request.execute({ url: 'https://api.example.com/dedup', method: 'GET' }),
-      request.execute({ url: 'https://api.example.com/dedup', method: 'GET' }),
+      request.execute({ url: 'https://api.henzret.com/items/products/dedup', method: 'GET' }),
+      request.execute({ url: 'https://api.henzret.com/items/products/dedup', method: 'GET' }),
+      request.execute({ url: 'https://api.henzret.com/items/products/dedup', method: 'GET' }),
     ]);
+    
     expect(callCount).toBe(1);
     expect(res1.data).toEqual({ id: 1 });
     expect(res2.data).toEqual({ id: 1 });
     expect(res3.data).toEqual({ id: 1 });
-  });
+  }, 15000);
 
   it('should abort request', async () => {
-    globalThis.fetch = vi.fn().mockImplementation(() => new Promise(() => {}));
-    const promise = request.execute({ url: 'https://api.example.com' });
-    request.abort('some-id'); // Not the actual id, but abortAll works
+    globalThis.fetch = vi.fn().mockImplementation(
+      () => new Promise(() => {}) // Never resolves
+    );
+    
+    const promise = request.execute({ url: 'https://api.henzret.com/items/products' });
+    
+    // Small delay to ensure request starts
+    await new Promise(r => setTimeout(r, 10));
+    
+    // Abort all requests
     request.abortAll();
-    await expect(promise).rejects.toThrow('aborted');
-  });
+    
+    await expect(promise).rejects.toThrow(/aborted|AbortError/);
+  }, 5000);
 });

@@ -86,7 +86,7 @@ import { createLagless } from 'lagless-core';
 const client = createLagless();
 
 const response = await client.request({
-  url: 'https://api.example.com/users',
+  url: 'https://api.henzret.com/items/products/users',
   method: 'GET'
 });
 

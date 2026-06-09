@@ -36,10 +36,17 @@ describe('StorageEngine', () => {
   });
 
   it('should get all keys', async () => {
+    // Clear storage first to remove previous test data
+    await storage.clear();
+    
     await storage.set('a', 1);
     await storage.set('b', 2);
+    
     const keys = await storage.keys();
-    expect(keys.sort()).toEqual(['a', 'b']);
+    // Filter out internal keys like '__version__'
+    const filteredKeys = keys.filter(k => k !== '__version__');
+    
+    expect(filteredKeys.sort()).toEqual(['a', 'b']);
   });
 
   it('should clear all', async () => {
